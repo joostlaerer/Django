@@ -18,7 +18,7 @@ A Django project with blog content management and member profile system.
 
 2. Install dependencies (if needed):
    ```powershell
-   pip install django
+   pip install -r requirements.txt
    ```
 
 3. Run migrations:
@@ -60,5 +60,5 @@ A Django project with blog content management and member profile system.
 
 ## Requirements
 
-- Python 3.9+
-- Django 4.2+
+- Python 3.14+
+- Django 6.0.3
