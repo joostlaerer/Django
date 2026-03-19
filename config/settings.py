@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'core',
     'medlemmer',
     'frivillige',
+    'kontingent',
 ]
 
 MIDDLEWARE = [

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import date
 
 
 class Member(models.Model):
@@ -14,3 +15,13 @@ class Member(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}" or self.user.username
+
+    def get_fee_for_year(self, year=None):
+        from kontingent.models import AnnualFee
+
+        target_year = year or date.today().year
+        return AnnualFee.objects.filter(member=self, year=target_year).first()
+
+    @property
+    def current_year_fee(self):
+        return self.get_fee_for_year()

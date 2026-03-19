@@ -13,11 +13,22 @@ class MemberListView(LoginRequiredMixin, ListView):
     context_object_name = 'members'
     paginate_by = 10
 
+    def get_queryset(self):
+        return Member.objects.select_related('user').all()
+
 
 class MemberDetailView(LoginRequiredMixin, DetailView):
     model = Member
     template_name = 'medlemmer/member_detail.html'
     context_object_name = 'member'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['can_view_fee'] = (
+            self.request.user.is_staff or self.object.user == self.request.user
+        )
+        context['current_fee'] = self.object.current_year_fee
+        return context
 
 
 class MemberEditView(LoginRequiredMixin, UpdateView):
