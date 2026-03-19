@@ -22,3 +22,7 @@ class Volunteer(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    @property
+    def skill_list(self):
+        return [skill.strip() for skill in self.skills.split(',') if skill.strip()]

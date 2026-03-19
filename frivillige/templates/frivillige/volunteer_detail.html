@@ -20,13 +20,20 @@
             max-width: 600px;
             margin: 0 auto;
         }
+        .profile-card {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             border-top: 4px solid #D84315;
+        }
         h1 {
-            color: #333;
+            color: #003D7A;
             margin-bottom: 30px;
             text-align: center;
         }
-            color: #003D7Aom: 20px;
+        .profile-section {
+            margin-bottom: 20px;
             padding-bottom: 20px;
             border-bottom: 1px solid #eee;
         }
@@ -35,7 +42,7 @@
         }
         .profile-label {
             font-weight: bold;
-            color: #666;
+            color: #1B4965;
             font-size: 14px;
             text-transform: uppercase;
             margin-bottom: 5px;
@@ -55,7 +62,7 @@
         }
         .skill-badge {
             background: #e8f5e9;
-            color: #2e7d32;
+            color: #2D5016;
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 14px;
@@ -77,15 +84,15 @@
             font-size: 16px;
         }
         .btn-primary {
-            background: #667eea;
+            background: #003D7A;
             color: white;
         }
         .btn-primary:hover {
-            background: #764ba2;
+            background: #1B4965;
         }
         .btn-secondary {
             background: #e2e8f0;
-            color: #333;
+            color: #003D7A;
         }
         .btn-secondary:hover {
             background: #cbd5e0;
@@ -105,7 +112,7 @@
             <div class="profile-section">
                 <div class="profile-label">Email</div>
                 <div class="profile-value">
-                    <a href="mailto:{{ volunteer.email }}" style="color: #667eea;">{{ volunteer.email }}</a>
+                    <a href="mailto:{{ volunteer.email }}" style="color: #003D7A;">{{ volunteer.email }}</a>
                 </div>
             </div>
 
@@ -113,7 +120,7 @@
                 <div class="profile-section">
                     <div class="profile-label">Phone</div>
                     <div class="profile-value">
-                        <a href="tel:{{ volunteer.phone }}" style="color: #667eea;">{{ volunteer.phone }}</a>
+                        <a href="tel:{{ volunteer.phone }}" style="color: #003D7A;">{{ volunteer.phone }}</a>
                     </div>
                 </div>
             {% endif %}
@@ -129,10 +136,8 @@
                 <div class="profile-section">
                     <div class="profile-label">Skills</div>
                     <div class="skills">
-                        {% for skill in volunteer.skills|split:"," %}
-                            {% if skill|trim %}
-                                <span class="skill-badge">{{ skill|trim }}</span>
-                            {% endif %}
+                        {% for skill in volunteer.skill_list %}
+                            <span class="skill-badge">{{ skill }}</span>
                         {% endfor %}
                     </div>
                 </div>

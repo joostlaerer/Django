@@ -169,8 +169,8 @@
                         {% endif %}
                         {% if volunteer.skills %}
                             <div>
-                                {% for skill in volunteer.skills|split:"," %}
-                                    <span class="skills-badge">{{ skill|trim }}</span>
+                                {% for skill in volunteer.skill_list %}
+                                    <span class="skills-badge">{{ skill }}</span>
                                 {% endfor %}
                             </div>
                         {% endif %}
