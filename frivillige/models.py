@@ -6,7 +6,7 @@ class Volunteer(models.Model):
     last_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=20, blank=True)
-    skills = models.TextField(blank=True, help_text="Comma-separated list of skills")
+    skills = models.TextField(blank=True, help_text="List your skills (separate multiple skills with commas, or just one is fine)")
     availability = models.CharField(
         max_length=100,
         blank=True,
