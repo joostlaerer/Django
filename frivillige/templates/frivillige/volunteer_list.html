@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1 {
+            color: #333;
+            margin: 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #764ba2;
+        }
+        .btn-signup {
+            background: #48bb78;
+        }
+        .btn-signup:hover {
+            background: #38a169;
+        }
+        .volunteer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .volunteer-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .volunteer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        .volunteer-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .volunteer-info {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .volunteer-info strong {
+            color: #333;
+        }
+        .skills-badge {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+        .volunteer-actions {
+            margin-top: 15px;
+        }
+        .volunteer-actions a {
+            display: inline-block;
+            padding: 8px 15px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            font-size: 14px;
+        }
+        .volunteer-actions a:hover {
+            background: #764ba2;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        .pagination a, .pagination span {
+            padding: 8px 12px;
+            background: white;
+            text-decoration: none;
+            border-radius: 5px;
+            color: #667eea;
+        }
+        .pagination a:hover {
+            background: #f0f0f0;
+        }
+        .pagination .current {
+            background: #667eea;
+            color: white;
+        }
+        .no-volunteers {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Our Volunteers</h1>
+            <div>
+                <a href="{% url 'frivillige:home' %}" class="btn">← Back Home</a>
+                <a href="{% url 'frivillige:volunteer-signup' %}" class="btn btn-signup" style="margin-left: 10px;">Join as Volunteer</a>
+            </div>
+        </div>
+
+        {% if volunteers %}
+            <div class="volunteer-grid">
+                {% for volunteer in volunteers %}
+                    <div class="volunteer-card">
+                        <div class="volunteer-name">{{ volunteer.first_name }} {{ volunteer.last_name }}</div>
+                        <div class="volunteer-info">
+                            <strong>Email:</strong> {{ volunteer.email }}
+                        </div>
+                        {% if volunteer.phone %}
+                            <div class="volunteer-info">
+                                <strong>Phone:</strong> {{ volunteer.phone }}
+                            </div>
+                        {% endif %}
+                        {% if volunteer.availability %}
+                            <div class="volunteer-info">
+                                <strong>Availability:</strong> {{ volunteer.availability }}
+                            </div>
+                        {% endif %}
+                        {% if volunteer.skills %}
+                            <div>
+                                {% for skill in volunteer.skills|split:"," %}
+                                    <span class="skills-badge">{{ skill|trim }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="volunteer-actions">
+                            <a href="{% url 'frivillige:volunteer-detail' volunteer.id %}">View Profile</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if is_paginated %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">First</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="no-volunteers">
+                <p style="font-size: 18px; margin-bottom: 20px;">No volunteers yet.</p>
+                <a href="{% url 'frivillige:volunteer-signup' %}" class="btn btn-signup">Be the first to sign up!</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

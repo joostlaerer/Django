@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frivillige - Volunteer Program</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 60px 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+        }
+        h1 {
+            color: #667eea;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .tagline {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            padding: 30px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .stat-item {
+            flex: 1;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .stat-label {
+            color: #999;
+            font-size: 14px;
+        }
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-signup {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-signup:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .btn-list {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #667eea;
+        }
+        .btn-list:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+        }
+        .btn-members {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+        .btn-members:hover {
+            background: #2e7d32;
+            color: white;
+            transform: translateY(-3px);
+        }
+        .features {
+            text-align: left;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+        }
+        .features h3 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .feature-list {
+            list-style: none;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+        .feature-list li:before {
+            content: "✓";
+            color: #48bb78;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Frivillige</h1>
+        <p class="tagline">Join our community of dedicated volunteers making a difference in our society</p>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">{{ volunteer_count }}</div>
+                <div class="stat-label">Active Volunteers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Opportunities</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">🌍</div>
+                <div class="stat-label">Global Impact</div>
+            </div>
+        </div>
+
+        <div class="features">
+            <h3>Why Join Us?</h3>
+            <ul class="feature-list">
+                <li>Make a real difference in your community</li>
+                <li>Connect with like-minded volunteers</li>
+                <li>Develop new skills and experience</li>
+                <li>Flexible scheduling options</li>
+                <li>Be part of something meaningful</li>
+            </ul>
+        </div>
+
+        <div class="buttons">
+            <a href="{% url 'frivillige:volunteer-signup' %}" class="btn btn-signup">Sign Up as Volunteer</a>
+            <a href="{% url 'frivillige:volunteer-list' %}" class="btn btn-list">View All Volunteers</a>
+            <a href="{% url 'medlemmer:member-list' %}" class="btn btn-members">Member Directory</a>
+        </div>
+    </div>
+</body>
+</html>

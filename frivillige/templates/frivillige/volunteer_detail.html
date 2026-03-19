@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .profile-card {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .profile-section {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .profile-section:last-child {
+            border-bottom: none;
+        }
+        .profile-label {
+            font-weight: bold;
+            color: #666;
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .profile-value {
+            color: #333;
+            font-size: 16px;
+        }
+        .profile-value.empty {
+            color: #999;
+            font-style: italic;
+        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .skill-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 16px;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #764ba2;
+        }
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #333;
+        }
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-card">
+            <h1>Volunteer Profile</h1>
+
+            <div class="profile-section">
+                <div class="profile-label">Name</div>
+                <div class="profile-value">{{ volunteer.first_name }} {{ volunteer.last_name }}</div>
+            </div>
+
+            <div class="profile-section">
+                <div class="profile-label">Email</div>
+                <div class="profile-value">
+                    <a href="mailto:{{ volunteer.email }}" style="color: #667eea;">{{ volunteer.email }}</a>
+                </div>
+            </div>
+
+            {% if volunteer.phone %}
+                <div class="profile-section">
+                    <div class="profile-label">Phone</div>
+                    <div class="profile-value">
+                        <a href="tel:{{ volunteer.phone }}" style="color: #667eea;">{{ volunteer.phone }}</a>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if volunteer.availability %}
+                <div class="profile-section">
+                    <div class="profile-label">Availability</div>
+                    <div class="profile-value">{{ volunteer.availability }}</div>
+                </div>
+            {% endif %}
+
+            {% if volunteer.skills %}
+                <div class="profile-section">
+                    <div class="profile-label">Skills</div>
+                    <div class="skills">
+                        {% for skill in volunteer.skills|split:"," %}
+                            {% if skill|trim %}
+                                <span class="skill-badge">{{ skill|trim }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if volunteer.bio %}
+                <div class="profile-section">
+                    <div class="profile-label">Bio</div>
+                    <div class="profile-value">{{ volunteer.bio|linebreaks }}</div>
+                </div>
+            {% endif %}
+
+            <div class="profile-section">
+                <div class="profile-label">Joined On</div>
+                <div class="profile-value">{{ volunteer.created_at|date:"F d, Y" }}</div>
+            </div>
+
+            <div class="actions">
+                <a href="{% url 'frivillige:volunteer-list' %}" class="btn btn-secondary">Back to List</a>
+                <a href="{% url 'frivillige:home' %}" class="btn btn-primary">Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
