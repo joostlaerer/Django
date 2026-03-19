@@ -59,6 +59,7 @@
             display: flex;
             gap: 10px;
             margin-top: 30px;
+            flex-wrap: wrap;
         }
         .btn {
             flex: 1;
@@ -84,6 +85,13 @@
         }
         .btn-secondary:hover {
             background: #cbd5e0;
+        }
+        .btn-accent {
+            background: #D84315;
+            color: white;
+        }
+        .btn-accent:hover {
+            background: #BF360C;
         }
         .status-badge {
             display: inline-block;
@@ -189,6 +197,12 @@
             <div class="actions">
                 {% if can_view_fee %}
                     <a href="{% url 'kontingent:my-fees' %}" class="btn btn-primary">My Annual Fees</a>
+                {% endif %}
+                {% if can_manage_fee and current_fee and current_fee.status != 'paid' %}
+                    <form method="post" action="{% url 'kontingent:mark-paid' member.id %}" style="flex: 1;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-accent" style="width: 100%;">Mark Fee as Paid</button>
+                    </form>
                 {% endif %}
                 <a href="{% url 'medlemmer:member-list' %}" class="btn btn-secondary">Back to List</a>
             </div>

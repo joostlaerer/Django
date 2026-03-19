@@ -27,6 +27,7 @@ class MemberDetailView(LoginRequiredMixin, DetailView):
         context['can_view_fee'] = (
             self.request.user.is_staff or self.object.user == self.request.user
         )
+        context['can_manage_fee'] = self.request.user.is_staff
         context['current_fee'] = self.object.current_year_fee
         return context
 
