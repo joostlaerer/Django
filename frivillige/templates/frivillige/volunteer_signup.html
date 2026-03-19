@@ -12,7 +12,7 @@
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -25,9 +25,10 @@
             padding: 40px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #D84315;
         }
         h1 {
-            color: #333;
+            color: #003D7A;
             margin-bottom: 10px;
             text-align: center;
         }
@@ -43,7 +44,7 @@
         label {
             display: block;
             font-weight: bold;
-            color: #333;
+            color: #003D7A;
             margin-bottom: 8px;
             font-size: 14px;
         }
@@ -64,8 +65,8 @@
         input[type="tel"]:focus,
         textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #003D7A;
+            box-shadow: 0 0 0 3px rgba(0, 61, 122, 0.1);
         }
         textarea {
             resize: vertical;
@@ -78,12 +79,12 @@
         }
         .required::after {
             content: " *";
-            color: #e74c3c;
+            color: #D84315;
         }
         .errors {
-            background: #fed7d7;
-            border-left: 4px solid #fc8181;
-            color: #c53030;
+            background: #ffebee;
+            border-left: 4px solid #D84315;
+            color: #b71c1c;
             padding: 12px;
             margin-bottom: 20px;
             border-radius: 4px;
@@ -113,16 +114,16 @@
             font-weight: bold;
         }
         .btn-submit {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #003D7A 0%, #1B4965 100%);
             color: white;
         }
         .btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 61, 122, 0.3);
         }
         .btn-cancel {
             background: #e2e8f0;
-            color: #333;
+            color: #003D7A;
         }
         .btn-cancel:hover {
             background: #cbd5e0;
