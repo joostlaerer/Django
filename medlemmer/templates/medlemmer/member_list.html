@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1 {
+            color: #333;
+            margin: 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #764ba2;
+        }
+        .btn-edit {
+            background: #48bb78;
+        }
+        .btn-edit:hover {
+            background: #38a169;
+        }
+        .member-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .member-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        .member-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .member-info {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .member-info strong {
+            color: #333;
+        }
+        .member-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        .member-actions a {
+            flex: 1;
+            padding: 8px 12px;
+            text-align: center;
+            background: #48bb78;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            font-size: 14px;
+        }
+        .member-actions a:hover {
+            background: #38a169;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        .pagination a, .pagination span {
+            padding: 8px 12px;
+            background: white;
+            text-decoration: none;
+            border-radius: 5px;
+            color: #667eea;
+        }
+        .pagination a:hover {
+            background: #f0f0f0;
+        }
+        .pagination .current {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Member List</h1>
+            <a href="{% url 'medlemmer:member-edit' %}" class="btn btn-edit">Edit My Profile</a>
+        </div>
+
+        {% if members %}
+            <div class="member-list">
+                {% for member in members %}
+                    <div class="member-card">
+                        <div class="member-name">
+                            {% if member.user.first_name and member.user.last_name %}
+                                {{ member.user.first_name }} {{ member.user.last_name }}
+                            {% else %}
+                                {{ member.user.username }}
+                            {% endif %}
+                        </div>
+                        <div class="member-info">
+                            <strong>Email:</strong> {{ member.user.email }}
+                        </div>
+                        {% if member.phone %}
+                            <div class="member-info">
+                                <strong>Phone:</strong> {{ member.phone }}
+                            </div>
+                        {% endif %}
+                        {% if member.city %}
+                            <div class="member-info">
+                                <strong>City:</strong> {{ member.city }}
+                            </div>
+                        {% endif %}
+                        {% if member.country %}
+                            <div class="member-info">
+                                <strong>Country:</strong> {{ member.country }}
+                            </div>
+                        {% endif %}
+                        <div class="member-actions">
+                            <a href="{% url 'medlemmer:member-detail' member.id %}">View</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if is_paginated %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">First</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <div style="background: white; padding: 40px; border-radius: 8px; text-align: center;">
+                <p style="color: #666; font-size: 18px;">No members found.</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
